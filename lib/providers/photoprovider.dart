@@ -2,11 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 import '../models/photo.dart';
+import '../providers/user.dart';
 
 class PhotoProvider extends ChangeNotifier {
   List<Photo> _photos = [];
+  User user = User();
+  List<String> _liked;
 
   List<Photo> get photos {
     return [..._photos];
@@ -14,6 +18,11 @@ class PhotoProvider extends ChangeNotifier {
 
   Future<void> fetchAndSetPhotos() async {
     var url = 'https://mypics-481ed.firebaseio.com/photos.json';
+    //await user.setInitial();
+    // final _liked = user.likes;
+    await user.setInitial();
+    _liked = user.likes;
+
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -22,11 +31,16 @@ class PhotoProvider extends ChangeNotifier {
         return;
       }
       extractedData.forEach((id, photoData) {
-        loadedPhoto.add(Photo(
-          id: id,
-          name: photoData['name'],
-          imageUrl: photoData['url'],
-        ));
+        loadedPhoto.add(
+          Photo(
+            id: id,
+            name: photoData['name'],
+            imageUrl: photoData['url'],
+            like: _liked != null
+                ? _liked.contains(photoData['name']) ? true : false
+                : false,
+          ),
+        );
       });
       _photos = loadedPhoto;
       notifyListeners();
@@ -47,11 +61,23 @@ class PhotoProvider extends ChangeNotifier {
         id: json.decode(response.body)['name'],
         name: filename,
         imageUrl: url,
+        like: false,
       );
       _photos.add(newPhoto);
       notifyListeners();
     } catch (error) {
       throw error;
     }
+  }
+
+  Future<void> toggleLikePhoto(String photoName) async {
+    _liked.contains(photoName)
+        ? await user.removeLike(photoName)
+        : await user.addLike(photoName);
+    _photos.firstWhere((element) => element.name == photoName).like =
+        !_photos.firstWhere((element) => element.name == photoName).like;
+    await user.refreshLikes();
+    _liked = user.likes;
+    notifyListeners();
   }
 }
