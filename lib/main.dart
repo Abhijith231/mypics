@@ -5,6 +5,7 @@ import 'package:mypics/providers/photoprovider.dart';
 import 'package:provider/provider.dart';
 
 import './screens/MainScreen.dart';
+import 'constants.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'MyPics',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: colorCustom,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: LandingPage(),
@@ -67,13 +68,20 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Sign in')),
-      body: Center(
-        child: RaisedButton(
-          child: Text('Sign in anonymously'),
-          onPressed: _signInAnonymously,
+      body: Container(
+        color: Color(0x96577F),
+        child: Center(
+          child: RaisedButton(
+            child: Text('Let\'s Start'),
+            onPressed: _signInAnonymously,
+            color: Color(0x1F3095),
+          ),
         ),
       ),
     );
   }
 }
+
+// #1F3095
+// #96577F
+// #FA8E44

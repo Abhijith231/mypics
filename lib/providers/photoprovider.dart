@@ -39,6 +39,7 @@ class PhotoProvider extends ChangeNotifier {
             like: _liked != null
                 ? _liked.contains(photoData['name']) ? true : false
                 : false,
+            blurhash: photoData['blurhash'],
           ),
         );
       });
@@ -47,7 +48,7 @@ class PhotoProvider extends ChangeNotifier {
     } catch (error) {}
   }
 
-  Future<void> addPhoto(String url, String filename) async {
+  Future<void> addPhoto(String url, String filename, String bh) async {
     var postUrl = 'https://mypics-481ed.firebaseio.com/photos.json';
     try {
       final response = await http.post(
@@ -55,6 +56,7 @@ class PhotoProvider extends ChangeNotifier {
         body: json.encode({
           'name': filename,
           'url': url,
+          'blurhash': bh,
         }),
       );
       final newPhoto = Photo(
@@ -62,6 +64,7 @@ class PhotoProvider extends ChangeNotifier {
         name: filename,
         imageUrl: url,
         like: false,
+        blurhash: bh,
       );
       _photos.add(newPhoto);
       notifyListeners();

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:mypics/constants.dart';
 
 import 'uploader.dart';
 
@@ -60,23 +61,42 @@ class _ImageCaptureState extends State<ImageCapture> {
     return SafeArea(
       child: Column(
         children: <Widget>[
-          Image.file(_imageFile),
+          Container(
+            margin: EdgeInsets.all(10),
+            height: 700,
+            child: Image.file(
+              _imageFile,
+              fit: BoxFit.cover,
+            ),
+          ),
 
-          Row(
-            children: <Widget>[
-              FlatButton(
-                child: Icon(Icons.refresh),
-                onPressed: _clear,
-              ),
-              FlatButton(
-                child: Icon(Icons.save),
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => Uploader(_imageFile),
+          SizedBox(
+            height: 100,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                FlatButton(
+                  child: Icon(
+                    Icons.refresh,
+                    size: 60,
+                    color: color2,
                   ),
+                  onPressed: _clear,
                 ),
-              )
-            ],
+                FlatButton(
+                  child: Icon(
+                    Icons.save,
+                    size: 60,
+                    color: color2,
+                  ),
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => Uploader(_imageFile, true),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
 
           // Uploader(file: _imageFile)
