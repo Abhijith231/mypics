@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "463043713576",
+    "firebase_url": "https://mypics-481ed.firebaseio.com",
+    "project_id": "mypics-481ed",
+    "storage_bucket": "mypics-481ed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463043713576:android:db76cb9239dfed9656f31d",
+        "android_client_info": {
+          "package_name": "com.example.mypics"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463043713576-099prggctm9vfv127tm0n9rkatd6f2cl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9UG94NBtY4arCPd6S7DFg07RFmC-Ks0A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463043713576-099prggctm9vfv127tm0n9rkatd6f2cl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
